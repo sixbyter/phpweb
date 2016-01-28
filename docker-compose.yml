@@ -1,0 +1,28 @@
+nginx-proxy:
+    image: 'jwilder/nginx-proxy'
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
+laravel:
+    image: 'sixbyte/homestead'
+    links:
+      - "mysql-base:mysqldocker"
+      - "redis-base:redisdocker"
+    volumes:
+      - /path/to/webapp/root:/var/www/root:rw
+      - /path/to/vhost/laravel.conf:/etc/nginx/conf.d/laravel.conf
+    environment:
+      - VIRTUAL_HOST=homestead.app
+
+mysql-base:
+    image: 'mysql:5.7'
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+
+redis-base:
+    image: 'redis:latest'
+    ports:
+      - "6379:6379"
