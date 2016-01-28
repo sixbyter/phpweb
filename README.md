@@ -1,8 +1,13 @@
-# phpenv-docker
+# PHPWEB
 
-This is a image about php development environment with docker
+A docker image for php development and it is very suitable for Laravel. i don't recommend to use it in production.
 
-# Info
+
+## Info
+
+Detail is in [Dockerfile](https://github.com/sixbyter/phpweb/blob/master/image/Dockerfile).
+
+what was it installed ?
 
 - php 7.0.2
 - composer
@@ -11,25 +16,47 @@ This is a image about php development environment with docker
 - nodejs 5.5.0
 - npm 3.3.12
 - nginx 1.9.9
+- gulp
+- bower
+- grunt-cli
+- pm2
 - supervisor
 - cron
 - git
 
 
-This env is not recommend for production
+## Require
 
+please you have installed `docker` and `docker-composer` before use
 
-# Usage
+## Usage
 
-please install `docker` and `docker-composer` before use
+pull:
 
-`git clone git@github.com:sixbyter/phpenv-docker.git`
+```
+git clone git@github.com:sixbyter/phpenv-docker.git
+```
 
-`cd phpenv-docker/image`
+cd dir:
 
-`docker build -t sixbyte/homestead`
+```
+cd phpweb
+```
 
-configurate `docker-composer.yml` file
+run `docker-composer`:
 
-`docker-composer up -d`
+```
+docker-composer up -d
+```
+
+also, you can build a new one:
+
+```
+git clone git@github.com:sixbyter/phpenv-docker.git
+cd phpweb/image
+docker build -t sixbyte/phpweb .
+cd ..
+docker-composer up -d
+```
+
 
