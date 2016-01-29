@@ -27,14 +27,14 @@
 
 ## 依赖
 
-使用本项目前, 请确保已经安装 `docker` 和 `docker-composer`
+使用本项目前, 请确保已经安装 `docker` 和 `docker-compose`
 
 ## 用法
 
 拉取代码:
 
 ```
-git clone git@github.com:sixbyter/phpenv-docker.git
+git clone git@github.com:sixbyter/phpweb.git
 ```
 
 切换目录:
@@ -43,21 +43,21 @@ git clone git@github.com:sixbyter/phpenv-docker.git
 cd phpweb
 ```
 
-运行 `docker-composer` 命令:
+运行 `docker-compose` 命令:
 
 ```
-docker-composer up -d
+docker-compose up -d
 ```
 
 
 你也可以重新 `build` 一个镜像的方式运行:
 
 ```
-git clone git@github.com:sixbyter/phpenv-docker.git
+git clone git@github.com:sixbyter/phpweb.git
 cd phpweb/image
 docker build -t sixbyte/phpweb .
 cd ..
-docker-composer up -d
+docker-compose up -d
 ```
 
 修改 `/etc/hosts` 文件:
