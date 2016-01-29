@@ -5,24 +5,28 @@ nginx-proxy:
       - "443:443"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
+    container_name: nginx-proxy
 
-laravel:
-    image: 'sixbyte/homestead'
+phpweb:
+    image: 'sixbyte/phpweb'
     links:
       - "mysql-base:mysqldocker"
       - "redis-base:redisdocker"
     volumes:
-      - /path/to/webapp/root:/var/www/root:rw
-      - /path/to/vhost/laravel.conf:/etc/nginx/conf.d/laravel.conf
+      - ./www:/var/www:rw
+      - ./www/phpweb.local.conf:/etc/nginx/conf.d/phpweb.local.conf
     environment:
-      - VIRTUAL_HOST=homestead.app
+      - VIRTUAL_HOST=phpweb.local
+    container_name: phpweb
 
-mysql-base:
+mysql:
     image: 'mysql:5.7'
     environment:
       - MYSQL_ROOT_PASSWORD=root
+    container_name: mysql
 
-redis-base:
+redis:
     image: 'redis:latest'
     ports:
       - "6379:6379"
+    container_name: redis

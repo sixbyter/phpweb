@@ -60,4 +60,63 @@ cd ..
 docker-composer up -d
 ```
 
+修改 `/etc/hosts` 文件:
+
+```
+127.0.0.1   phpweb.local
+```
+
+浏览器打开地址:
+
+```
+http://phpweb.local/
+```
+
+
+如果你要添加一个新的项目:
+
+```
+# 修改 docker-compose.yml 文件, 添加如下:
+anotherphpweb:
+    image: 'sixbyte/anotherphpweb'
+    links:
+      - "mysql-base:mysqldocker"
+      - "redis-base:redisdocker"
+    volumes:
+      - /path/to/www:/var/www:rw
+      - /path/to/anotherphpweb.conf:/etc/nginx/conf.d/anotherphpweb.conf
+    environment:
+      - VIRTUAL_HOST=anotherphpweb.local
+    container_name: anotherphpweb
+```
+一个独立的容器可以保证运行环境的隔离.
+
+如果你要定制配置:
+
+```
+volumes:
+      - /path/to/www:/var/www:rw
+      - /path/to/anotherphpweb.conf:/etc/nginx/conf.d/anotherphpweb.conf
+      - /path/to/crontab.file:/root/crontab.file # crontab
+      - /path/to/php-fpm.conf:/usr/local/etc/php-fpm.conf # php-fpm.conf
+      - /path/to/php.ini:/usr/local/etc/php/php.ini # php.ini
+```
+
+可以通过 `volumes` 参数链接容器的任何文件, 实现动态修改.
+
+
+## 其他
+
+这里对一些内容进行说明.
+
+### 图解
+
+![结构](./doc/F035DBB5-CE77-4C0C-8829-542A6C4F9AEE.png)
+
+### 关于使用 `nginx-proxy`
+
+github 地址: [jwilder/nginx-proxy](https://github.com/jwilder/nginx-proxy)
+
+本镜像可以不使用 `nginx-proxy`, 我使用的原因是希望每次访问 `web` 站点都是 `80` 端口. 能占用宿主 `80` 端口的只有一个容器, 当创建多个 `phpweb` 容器的时候就要使用其他端口, 所以比较好的方法是使用 `nginx-proxy` 做代理, 同时还解决了容器动态 `ip` 的配置问题, 稍作配置, 还能当负载均衡. 详细参考 [jwilder/nginx-proxy](https://github.com/jwilder/nginx-proxy).
+
 
